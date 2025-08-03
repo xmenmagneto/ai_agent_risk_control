@@ -5,6 +5,8 @@ import os
 
 class ModelAgent(BaseAgent):
     MODEL_PATH = "models/isolation_forest.joblib"
+    MIN_SCORE = -0.086565
+    MAX_SCORE = 0.160942
 
     def __init__(self):
         if not os.path.exists(self.MODEL_PATH):
@@ -29,15 +31,17 @@ class ModelAgent(BaseAgent):
         print(f"[ModelAgent] 原始模型评分 (decision_function): {raw_score:.4f}")
 
         # 反转分数，越大越风险
-        risk_score = -raw_score * 100
+        pos_score = -raw_score
 
-        # 简单限幅归一化，确保risk_score在0~100范围内
-        risk_score = max(0, min(100, risk_score))
-        print(f"[ModelAgent] 归一化后风险评分: {risk_score:.2f}")
+        # 归一化到0~100区间
+        risk_score_normalized = (pos_score - self.MIN_SCORE) / (self.MAX_SCORE - self.MIN_SCORE) * 100
+        # 限幅确保在0~100内
+        risk_score_normalized = max(0, min(100, risk_score_normalized))
+        print(f"[ModelAgent] 归一化后风险评分: {risk_score_normalized:.2f}")
 
         result = {
             **input_data,
-            "risk_score": round(risk_score, 2)
+            "risk_score": round(risk_score_normalized, 2)
         }
 
         print(f"[ModelAgent] 输出: {result}")

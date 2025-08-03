@@ -38,6 +38,11 @@ def train_and_save():
     model = IsolationForest(n_estimators=100, contamination=0.05, random_state=42)
     model.fit(x_scaled)
 
+    # 计算训练集样本的决策函数分数
+    decision_scores = model.decision_function(x_scaled)
+    min_score = decision_scores.min()
+    max_score = decision_scores.max()
+
     # 保存模型和 scaler
     os.makedirs("models", exist_ok=True)
     joblib.dump(model, "models/isolation_forest.joblib")
@@ -46,6 +51,8 @@ def train_and_save():
     print("模型训练完成并保存：")
     print("  - models/isolation_forest.joblib")
     print("  - models/scaler.joblib")
+    print(f"训练集决策函数分数范围：MIN_SCORE = {min_score:.6f}, MAX_SCORE = {max_score:.6f}")
+
 
 if __name__ == "__main__":
     train_and_save()
