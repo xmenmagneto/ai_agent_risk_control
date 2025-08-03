@@ -8,6 +8,8 @@ class ExplainAgent(BaseAgent):
         pass
 
     async def process(self, input_data: dict) -> dict:
+        print(f"[ExplainAgent] 输入: {input_data}")
+
         score = input_data.get("risk_score", 0)
         rule_hit = input_data.get("rule_risk", False)
 
@@ -20,7 +22,11 @@ class ExplainAgent(BaseAgent):
             parts.append(f"模型评分为 {score}，风险较低")
 
         explanation = "；".join(parts)
-        return {
+        print(f"[ExplainAgent] 生成解释: {explanation}")
+
+        result = {
             **input_data,
             "explanation": explanation
         }
+        print(f"[ExplainAgent] 输出: {result}")
+        return result

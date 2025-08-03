@@ -8,8 +8,15 @@ class ModelAgent(BaseAgent):
         pass  # 资源释放
 
     async def process(self, input_data: dict) -> dict:
-        # 这里用伪代码模拟模型预测
-        # 实际用时换成调用模型接口或推理逻辑
+        print(f"[ModelAgent] 输入: {input_data}")
+
         features = input_data.get("features", {})
+        print(f"[ModelAgent] 提取特征: {features}")
+
         score = 65  # 模拟结果
-        return {"risk_score": score, **input_data}
+        print(f"[ModelAgent] 模拟风险评分: {score}")
+
+        result = {"risk_score": score, **input_data}
+        print(f"[ModelAgent] 输出: {result}")
+
+        return result
