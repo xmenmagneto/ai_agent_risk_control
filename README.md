@@ -1,64 +1,50 @@
-# 🧠 AI Agent Risk Control System
+# AI Agent 风控系统
 
-一个面向金融、风控、安全场景的智能 Agent 系统，基于 FastAPI + asyncio 构建，支持多智能体协同处理风控事件。该系统具备模块化、异步化、可扩展的架构，适用于风控评分、异常检测、用户画像等任务。
+一个基于多智能体架构的实时风控 AI Agent 项目，集成 LangGraph 流程编排，支持实时数据流接入、风控模型推理与多Agent协同。
 
-## 📦 项目亮点
+---
 
-- 支持多个异步智能体（Agent）并发运行  
-- 每个 Agent 拥有独立消息队列（支持未来接入 Kafka / Redis 等）  
-- 内置 HTTP 接口（基于 FastAPI），支持外部系统接入  
-- 易于扩展：继承 `BaseAgent` 即可快速开发新模块  
-- 可拓展性强，适合做微服务风控网格（Risk Micro-Mesh）
+## 项目亮点
 
-## 🏗️ 项目结构
-```
-ai_agent_risk_control/
-├── agents/
-│   ├── __init__.py
-│   ├── base_agent.py         # Agent 抽象基类
-│   └── example_agent.py      # 示例 Agent
-├── main.py                   # FastAPI 服务入口
-├── requirements.txt          # 依赖列表
-└── README.md
-```
+- FastAPI 构建高性能异步服务
+- 多Agent异步消息通信框架
+- 集成 Redis Streams 进行实时数据流处理
+- 支持风控模型在线推理与自适应更新
+- 使用 LangGraph 实现流程编排与状态管理
+- 支持插件式功能扩展和内存管理
+- 容器化部署与Kubernetes高可用支持
 
-## 🚀 快速开始
-```
-1️⃣ 克隆仓库
+---
 
-git clone https://github.com/yourusername/ai_agent_risk_control.git
-cd ai_agent_risk_control
+## 快速开始
 
-2️⃣ 创建虚拟环境并激活
+1. 克隆仓库  
+   `git clone https://github.com/xmenmagneto/ai_agent_risk_control.git`  
+   `cd ai_agent_risk_control`  
 
-python -m venv venv
-# Windows PowerShell
-.\venv\Scripts\Activate.ps1
-# macOS/Linux
-source venv/bin/activate
+2. 安装依赖  
+   `python -m venv venv`  
+   `.\venv\Scripts\activate  # Windows PowerShell`  
+   `pip install -r requirements.txt`  
 
-3️⃣ 安装依赖
+3. 配置环境变量  
+   在项目根目录创建 `.env` 文件，内容示例：  
+   `OPENAI_API_KEY=你的API密钥（可选）`  
+   `REDIS_URL=redis://localhost:6379`  
 
-pip install -r requirements.txt
+4. 启动服务  
+   `python -m uvicorn main:app --reload`  
 
-4️⃣ 启动服务
+5. 访问接口  
+   - GET `http://127.0.0.1:8000/` 返回服务状态  
+   - POST `http://127.0.0.1:8000/run` 发送示例请求测试  
 
-uvicorn main:app --reload
+---
 
-接口文档地址：http://127.0.0.1:8000/docs
-```
+## 后续计划
 
-## 🧱 可拓展方向
-
-- 引入大模型能力（如调用 OpenAI、文心一言、通义千问等）进行风控分析  
-- 对接 Kafka 或 Redis 实现跨服务 Agent 通信  
-- Agent 之间建立图结构，支持上下游依赖关系  
-- 引入向量数据库，用于用户行为画像和历史模式识别  
-- 增加认证与日志模块（用于生产部署）
-
-## 📌 环境要求
-
-- Python 3.8+
-- FastAPI
-- uvicorn
-- asyncio
+- 集成多源实时风控数据流（Kafka/Redis Streams）  
+- 开发风控模型Agent，支持模型推理与在线学习  
+- 实现多Agent协同规则引擎，动态合成风险评分  
+- 引入告警系统和日志监控，提升系统可观测性  
+- 完善容器化与自动化部署，支持生产环境弹性扩展
