@@ -1,5 +1,7 @@
 from langgraph.graph import StateGraph
 from typing import TypedDict
+
+from agents.explain_llm_agent import ExplainLLMAgent
 from agents.rule_agent import RuleAgent
 from agents.model_agent import ModelAgent
 from agents.explain_agent import ExplainAgent
@@ -43,6 +45,13 @@ async def explain_node(state: dict) -> dict:
     await agent.stop()
     return result
 
+async def explain_llm_node(state: dict) -> dict:
+    agent = ExplainLLMAgent()
+    await agent.start()
+    result = await agent.process(state)
+    await agent.stop()
+    return result
+
 # 构建多Agent流程图，明确执行顺序和入口、出口节点
 def build_multi_agent_graph():
     builder = StateGraph(AgentState)  # 传入状态schema保证类型安全
@@ -50,6 +59,20 @@ def build_multi_agent_graph():
     builder.add_node("rule", rule_node)
     builder.add_node("model", model_node)
     builder.add_node("explain", explain_node)
+
+    builder.set_entry_point("rule")
+    builder.add_edge("rule", "model")
+    builder.add_edge("model", "explain")
+    builder.set_finish_point("explain")
+
+    return builder.compile()
+
+def build_multi_agent_graph_using_openai():
+    builder = StateGraph(AgentState)  # 传入状态schema保证类型安全
+
+    builder.add_node("rule", rule_node)
+    builder.add_node("model", model_node)
+    builder.add_node("explain", explain_llm_node)
 
     builder.set_entry_point("rule")
     builder.add_edge("rule", "model")
