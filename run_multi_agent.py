@@ -1,23 +1,58 @@
 test_data_list = [
     {
-        "user_id": "black_123",  # 黑名单用户
-        "features": {"f1": 0.8, "f2": 0.1}
+        "user_id": "black_001",
+        "features": {
+            "amount": 500.0,
+            "frequency": 50,
+            "ip_change_rate": 0.2,
+            "device_change_rate": 0.25,
+            "avg_session_time": 5,
+            "region_entropy": 3.2
+        }
     },
     {
-        "user_id": "white_456",  # 非黑名单用户
-        "features": {"f1": 0.3, "f2": 0.7}
+        "user_id": "white_002",
+        "features": {
+            "amount": 150.0,
+            "frequency": 10,
+            "ip_change_rate": 0.01,
+            "device_change_rate": 0.02,
+            "avg_session_time": 20,
+            "region_entropy": 1.0
+        }
     },
     {
-        "user_id": "black_xyz",  # 黑名单用户，测试不同ID格式
-        "features": {"f1": 0.5, "f2": 0.5}
+        "user_id": "black_003",
+        "features": {
+            "amount": 800.0,
+            "frequency": 100,
+            "ip_change_rate": 0.5,
+            "device_change_rate": 0.6,
+            "avg_session_time": 3,
+            "region_entropy": 4.5
+        }
     },
     {
-        "user_id": "",  # user_id 为空，测试边界
-        "features": {"f1": 0.1, "f2": 0.9}
+        "user_id": "",
+        "features": {
+            "amount": 0.0,
+            "frequency": 0,
+            "ip_change_rate": 0.0,
+            "device_change_rate": 0.0,
+            "avg_session_time": 0,
+            "region_entropy": 0.0
+        }
     },
     {
-        "user_id": "normal_user",  # 正常用户，特征全为0
-        "features": {"f1": 0.0, "f2": 0.0}
+        "user_id": "user_normal",
+        "features": {
+            "amount": 220.0,
+            "frequency": 15,
+            "ip_change_rate": 0.015,
+            "device_change_rate": 0.01,
+            "avg_session_time": 18,
+            "region_entropy": 1.3
+        }
     }
 ]
 

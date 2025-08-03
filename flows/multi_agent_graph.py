@@ -5,10 +5,18 @@ from agents.model_agent import ModelAgent
 from agents.explain_agent import ExplainAgent
 
 # 定义状态结构（schema），用 TypedDict 描述传递给每个节点的数据结构
-class AgentState(TypedDict, total=False):
+class Features(TypedDict):
+    amount: float
+    frequency: int
+    ip_change_rate: float
+    device_change_rate: float
+    avg_session_time: float
+    region_entropy: float
+
+class AgentState(TypedDict):
     user_id: str
-    features: dict
-    risk_score: int
+    features: Features
+    risk_score: float
     rule_risk: bool
     rule_reason: str
     explanation: str
